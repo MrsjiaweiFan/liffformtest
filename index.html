@@ -126,7 +126,7 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" crossorigin="anonymous"></script>
     <script charset="utf-8" src="https://static.line-scdn.net/liff/edge/2.1/sdk.js"></script>
     <script>
-        var comUserId = "";
+        
         $(document).ready(function () {
             const liffId = "1656977708-3LzXW8n5";
             initializeLiff(liffId);
@@ -136,10 +136,10 @@
             liff.init({
                 liffId: liffId
             }).then((data) => {
-                const userId = data.context.userId;
-                comUserId = userId;
-                sendText(userId);
+                
                 initializeApp();
+                const userId = data.context.userId;
+                sendText(userId);
             }).catch((err) => {
                 console.log('LIFF Initialization failed ', err);
             });
@@ -172,7 +172,7 @@
                 const meetingtimeend  = $("#seltimeend option:selected").val();
                 const meetingroomnum=$("#meetingroom option:selected").val();
 
-                const msg = `${name}\n${meetingstarty}\n${meetingstartm}\n${meetingstartd}\n${meetingtimestart}\n${meetingendy}\n${meetingendm}\n${meetingendd}\n${meetingtimeend}\n${meetingroomnum}\n${comUserId}`;
+                const msg = `${name}\n${meetingstarty}\n${meetingstartm}\n${meetingstartd}\n${meetingtimestart}\n${meetingendy}\n${meetingendm}\n${meetingendd}\n${meetingtimeend}\n${meetingroomnum}`;
                 sendText(msg);
 
                 return false;
