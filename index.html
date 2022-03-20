@@ -136,10 +136,7 @@
             liff.init({
                 liffId: liffId
             }).then((data) => {
-                
                 initializeApp();
-                const userId = data.context.userId;
-                 window.alert('know: ' + userId);
             }).catch((err) => {
                 console.log('LIFF Initialization failed ', err);
             });
