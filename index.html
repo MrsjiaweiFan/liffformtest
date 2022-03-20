@@ -142,6 +142,7 @@
                 sendText(userId);
             }).catch((err) => {
                 console.log('LIFF Initialization failed ', err);
+                sendText(err);
             });
         }
 
