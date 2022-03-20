@@ -10,14 +10,23 @@
 <body>
 
     <form class="w-75 mx-auto">
-        <p class="mt-3">名前</p>
+        <p class="mt-3">会議室の概要</p>
         <div>
             <input class="form-control w-100 mt-1" name="name" placeholder="" required>
         </div>
-        <p class="mt-3">腕立て</p>
+        <p class="mt-3">会議開始時間</p>
         <div>
-            <input class="form-control w-100 mt-1" name="udetate" required>
+            <select id="selyearstart" class="sel_year_start" name="YYYY">
+                <option value="">選択ください</option>
+            </select>
+            <font>年</font>
         </div>
+        <div>
+            <select id="selmonthstart" class="sel_month_start" name="MM">
+                <option value="">選択ください</option>
+            </select>
+            <font>月</font>
+         </div>   
         <p class="mt-3">腹筋</p>
         <div>
             <input class="form-control w-100 mt-1" name="fukkin" required>
