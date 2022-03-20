@@ -27,18 +27,12 @@
             </select>
             <font>月</font>
          </div>   
-        <p class="mt-3">腹筋</p>
         <div>
-            <input class="form-control w-100 mt-1" name="fukkin" required>
-        </div>
-        <p class="mt-3">背筋</p>
-        <div>
-            <input class="form-control w-100 mt-1" name="haikin" required>
-        </div>
-        <p class="mt-3">スクワット</p>
-        <div>
-            <input class="form-control w-100 mt-1" name="sukuwat" required>
-        </div>
+            <select id="seldaystart" class="sel_day_start" name="DD">
+                <option value="">選択ください</option>
+            </select>
+            <font>日</font>
+        </div>    
         <p class="mt-3">ミーティングルーム番号</p>
         <div>
             <select id="meetingroom">
@@ -90,18 +84,121 @@
         $(function () {
             $('form').submit(function () {
                 const name    = $('input[name="name"]').val();
-                const udetate = $('input[name="udetate"]').val();
-                const fukkin  = $('input[name="fukkin"]').val();
-                const haikin  = $('input[name="haikin"]').val();
-                const sukuwat = $('input[name="sukuwat"]').val();
+
                 const meetingroomnum=$("#meetingroom option:selected").val();
-                const msg = `${name}\n${udetate}\n${fukkin}\n${haikin}\n${sukuwat}\n${meetingroomnum}`;
+                const msg = `${name}\n${meetingroomnum}`;
                 sendText(msg);
 
                 return false;
             });
         });
+         $(function (){
+            $.ms_DatePicker({
+                YearSelector: ".sel_year_start",
+                MonthSelector: ".sel_month_start",
+                DaySelector: ".sel_day_start"
+            });
+            $.ms_DatePickerE({
+                YearSelector: ".sel_year_end",
+                MonthSelector: ".sel_month_end",
+                DaySelector: ".sel_day_end"
+            });
+        });
 
+        (function($){
+            $.extend({
+                ms_DatePicker: function(options) {
+                    var defaults = {
+                        YearSelector: "#sel_year_start",
+                        MonthSelector: "#sel_month_start",
+                        DaySelector: "#sel_day_start",
+                        FirstText: "--",
+                        FirstValue: 0
+                    };
+                    var opts = $.extend({}, defaults, options);
+                    var $YearSelector = $(opts.YearSelector);
+                    var $MonthSelector = $(opts.MonthSelector);
+                    var $DaySelector = $(opts.DaySelector);
+                    var FirstText = opts.FirstText;
+                    var FirstValue = opts.FirstValue;
+
+                    var str = "<option value=\"" + FirstValue + "\">"+FirstText+"</option";
+                    $YearSelector.html(str);
+                    $MonthSelector.html(str);
+                    $DaySelector.html(str);
+
+                    // 年
+                    var yearNow = new Date().getFullYear();
+                    var yearSel = $YearSelector.attr("rel");
+                    for (var i = yearNow+1; i >= yearNow; i--) {
+                        var sed = yearSel==i?"selected":"";
+                        var yearStr = "<option value=\"" + i + "\" " + sed+">"+i+"</option>";
+                        $YearSelector.append(yearStr);
+                    }
+                    // 月
+                    var monthSel = $MonthSelector.attr("rel");
+                    for (var i = 1; i <= 12; i++) {
+                        var sed = monthSel==i?"selected":"";
+                        var monthStr = "<option value=\"" + i + "\" "+sed+">"+i+"</option>";
+                        $MonthSelector.append(monthStr);
+                    }
+                    // 日
+                    function BuildDay() {
+                        if ($YearSelector.val() == 0 || $MonthSelector.val() == 0) {
+                            //未選択年/月
+                            $DaySelector.html(str);
+                        } else {
+                            $DaySelector.html(str);
+                            var year = parseInt($YearSelector.val());
+                            var month = parseInt($MonthSelector.val());
+                            var dayCount = 0;
+                            switch (month) {
+                                case 1:
+                                case 3:
+                                case 5:
+                                case 7:
+                                case 8:
+                                case 10:
+                                case 12:
+                                dayCount = 31;
+                                break;
+                                case 4:
+                                case 6:
+                                case 9:
+                                case 11:
+                                dayCount = 30;
+                                break;
+                                case 2:
+                                dayCount = 28;
+                                if ((year % 4 == 0) && (year % 100 != 0) || (year % 400 == 0)) {
+                                    dayCount = 29;
+                                }
+                                break;
+                                default:
+                                    break;
+                            }
+                            var daySel = $DaySelector.attr("rel");
+                            for (var i = 1; i <= dayCount; i++) {
+                                var sed = daySel == i ? "selected": "";
+                                var dayStr = "<option value=\"" + i + "\" "+sed+">" + i + "</option>";
+                                $DaySelector.append(dayStr);
+                            }
+                        }
+                    }
+                    $MonthSelector.change(function (){
+                        BuildDay();
+                    });
+                    $YearSelector.change(function (){
+                        BuildDay();
+                    });
+                    if ($DaySelector.attr("rel")!="") {
+                        BuildDay();
+                    }
+                }
+                
+            });
+            
+        })(jQuery);
     </script>
 
 </body>
