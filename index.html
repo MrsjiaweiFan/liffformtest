@@ -139,10 +139,9 @@
                 
                 initializeApp();
                 const userId = data.context.userId;
-                sendText(userId);
+                 window.alert('know: ' + userId);
             }).catch((err) => {
                 console.log('LIFF Initialization failed ', err);
-                sendText(err);
             });
         }
 
