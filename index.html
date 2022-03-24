@@ -170,7 +170,7 @@
                 const meetingroomnum=$("#meetingroom option:selected").val();
 
                 const msg = `${name}\n${meetingstarty}\n${meetingstartm}\n${meetingstartd}\n${meetingtimestart}\n${meetingendy}\n${meetingendm}\n${meetingendd}\n${meetingtimeend}\n${meetingroomnum}`;
-                sendText(msg);
+                sendText("会議室の予約："+msg);
 
                 return false;
             });
