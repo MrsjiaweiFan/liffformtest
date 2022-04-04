@@ -16,7 +16,7 @@
         </div>
         <p class="mt-3">会議日期</p>
         <div>
-            <input type="date" class="meetingdate" name="meetingdate" placeholder="年/月/日" required>
+            <input type="date" class="meetingdate" name="meetingdate" id="meetingdate" required>
             
         </div>
         <div>
@@ -104,6 +104,17 @@
         })
 
         function initializeLiff(liffId) {
+            var nowDay = new Date();
+            var day = nowDay.getDate();
+            if (nowDay.getMonth()<10) {
+                var month = "0" + (nowDay.getMonth()+1);
+            }
+            if (nowDay.getDate()<10) {
+                day = "0"+nowDay.getDate();
+            }
+            var datew = nowDay.getFullYear()+"/"+"07"+"/"+day;
+            var datew = datew.toString();
+            $('meetingdate').val(datew);
             liff.init({
                 liffId: liffId
             }).then((data) => {
@@ -130,13 +141,12 @@
         $(function () {
             $('form').submit(function () {
                 const name    = $('input[name="name"]').val();
-                
-                const meetingroomnum=$("#meetingroom option:selected").val();
+                const meetingdate    = $('input[name="meetingdate"]').val();
                 const meetingtimestart  = $("#seltimestart option:selected").val();
                 const meetingtimeend  = $("#seltimeend option:selected").val();
                 const meetingroomnum=$("#meetingroom option:selected").val();
 
-                const msg = `${name}\n${meetingroomnum}\n${meetingtimestart}\n${meetingtimeend}\n${meetingroomnum}`;
+                const msg = `${name}\n${meetingdate}\n${meetingtimestart}\n${meetingtimeend}\n${meetingroomnum}`;
                 sendText("会議室の予約：\n"+msg);
 
                 return false;
