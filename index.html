@@ -99,14 +99,14 @@
     <script>
         
         $(document).ready(function () {
-            const liffId = "**********-********";
+            const liffId = "1656977708-3LzXW8n5";
             initializeLiff(liffId);
         })
 
         function initializeLiff(liffId) {
             liff.init({
                 liffId: liffId
-            }).then(() => {
+            }).then((data) => {
                 initializeApp();
             }).catch((err) => {
                 console.log('LIFF Initialization failed ', err);
@@ -134,9 +134,10 @@
                 const meetingroomnum=$("#meetingroom option:selected").val();
                 const meetingtimestart  = $("#seltimestart option:selected").val();
                 const meetingtimeend  = $("#seltimeend option:selected").val();
+                const meetingroomnum=$("#meetingroom option:selected").val();
 
-                const msg = `${name}\n${meetingdate}\n${meetingroomnum}\n${meetingtimestart}\n${meetingtimeend}`;
-                sendText(msg);
+                const msg = `${name}\n${meetingdate}\n${meetingroomnum}\n${meetingtimestart}\n${meetingtimeend}\n${meetingroomnum}`;
+                sendText("会議室の予約：\n"+msg);
 
                 return false;
             });
