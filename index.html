@@ -16,7 +16,7 @@
         </div>
         <p class="mt-3">会議日期</p>
         <div>
-            <input type="date" class="meetingdate" name="meetingdate" placeholder=new date() required>
+            <input type="date" class="meetingdate" name="meetingdate" placeholder="年/月/日" required>
             
         </div>
         <div>
@@ -130,13 +130,13 @@
         $(function () {
             $('form').submit(function () {
                 const name    = $('input[name="name"]').val();
-                const meetingdate    = $("#meetingdate option:selected").val();
+                
                 const meetingroomnum=$("#meetingroom option:selected").val();
                 const meetingtimestart  = $("#seltimestart option:selected").val();
                 const meetingtimeend  = $("#seltimeend option:selected").val();
                 const meetingroomnum=$("#meetingroom option:selected").val();
 
-                const msg = `${name}\n${meetingdate}\n${meetingroomnum}\n${meetingtimestart}\n${meetingtimeend}\n${meetingroomnum}`;
+                const msg = `${name}\n${meetingroomnum}\n${meetingtimestart}\n${meetingtimeend}\n${meetingroomnum}`;
                 sendText("会議室の予約：\n"+msg);
 
                 return false;
