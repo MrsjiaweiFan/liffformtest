@@ -62,6 +62,7 @@
 
                 // const msg = `${name}\n${meetingdate}\n${meetingtimestart}\n${meetingtimeend}\n${meetingroomnum}`;
                 // sendText("Line Notify 预定成功：\n"+msg);
+              sendText("發送：\n");
                 // return false;
             }).catch((err) => {
                 console.log('LIFF Initialization failed ', err);
@@ -90,7 +91,9 @@
                 // sendText("Line Notify 预定成功：\n"+msg);
                 // window.location.href="https://liff.line.me/1656977708-yznbkJe2"+"?access_token="+access_token+"&target_type="+target_type;
                 // window.location.href = "https://mrsjiaweifan.github.io/liffformtest/index.html";
-                sendText("發送：\n");
+              const liffId = "1656977708-yznbkJe2";
+            initializeLiff(liffId);
+                
                 return false;
             });
         });
