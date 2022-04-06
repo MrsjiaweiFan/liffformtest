@@ -140,7 +140,7 @@
                 const meetingtimeend  = $("#seltimeend option:selected").val();
                 const meetingroomnum=$("#meetingroom option:selected").val();
 
-                const msg = `${name}\n${meetingdate+meetingtimestart}\n${meetingdate+meetingtimeend}\n${meetingtimeend}\n${meetingroomnum}`;
+                const msg = `${name}\n${meetingdate+" "+meetingtimestart}\n${meetingdate+" "+meetingtimeend}\n${meetingroomnum}`;
                 sendText("会議室の予約：\n"+msg);
 
                 return false;
