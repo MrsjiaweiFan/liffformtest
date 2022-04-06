@@ -58,7 +58,13 @@
             var day = ("0" + time.getDate()).slice(-2);
             var month = ("0" + (time.getMonth() + 1)).slice(-2);
             var today = time.getFullYear() + "-" + (month) + "-" + (day);
+            var hour = time.getHours();
+            var minute = time.getMinutes();
+            var nowTime = hour + ":" + minute;
+            var nowTimeEnd = hour + ":" + (minute + 1);
             $('#meetingdate').val(today);
+            $('#seltimestart').val(nowTime);
+            $('#seltimeend').val(nowTimeEnd);
             liff.init({
                 liffId: liffId
             }).then((data) => {
