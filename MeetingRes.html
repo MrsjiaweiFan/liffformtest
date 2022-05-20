@@ -242,7 +242,7 @@
                 const msg = name + "\n" + meetingDate + " " + meetingTimeStart + "\n" + meetingDate + " " + meetingTimeEnd +
                 "\n" + meetingRoomNum + "\n" + notificationFlag;
            // sendText("会議室の予約：\n" + msg);
-            window.alert(liff.getProfile());
+            window.alert(liff.getProfile().userId);
             return false;
         }
         // 支付成功后在原页面赋值
