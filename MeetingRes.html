@@ -65,7 +65,7 @@
             <p class="mt-6">会議の開始前に通知が必要かどうか</p>
             <div class="notifycontainer">
                 <select id="notificationflag">
-                    <option value="1">通知不要</option>
+                    <option value="通知不要">通知不要</option>
                     <option value="5">5分前に通知する</option>
                     <option value="10">10分前に通知する</option>
                     <option value="15">15分前に通知する</option>
@@ -107,32 +107,22 @@
     </script>
     <script charset="utf-8" src="https://static.line-scdn.net/liff/edge/2.1/sdk.js"></script>
     <script>
-         window.onbeforeunload = function(e) {
-            return '';
-        };
+        // window.onbeforeunload = function(e) {
+        //     return '';
+        // };
         $(document).ready(function () {
             coverDiv();
             const liffId = "1656977708-3LzXW8n5";
             initializeLiff(liffId);
-            
+
             setTimeout(function () {
                 hide();
                 judgewherefrom();
-            }, 5000); 
+            }, 5000);
         })
 
         function initializeLiff(liffId) {
-            var time = new Date();
-            var day = ("0" + time.getDate()).slice(-2);
-            var month = ("0" + (time.getMonth() + 1)).slice(-2);
-            var today = time.getFullYear() + "-" + (month) + "-" + (day);
-            var hour = time.getHours();
-            var minute = time.getMinutes();
-            var nowTime = hour + ":" + minute;
-            var nowTimeEnd = hour + ":" + (minute + 1);
-            $('#meetingdate').val(today);
-            $('#seltimestart').val(nowTime);
-            $('#seltimeend').val(nowTimeEnd);
+
             liff.init({
                 liffId: liffId
             }).then((data) => {
@@ -146,12 +136,21 @@
             // 判断是初次进入页面还是由line pay跳转回来的
             const params = (new URL(document.location)).searchParams;
             if (params.get('flag') == "success") {
-                setTimeout(function () {
-                    paySuccessClose(params);
-                }, 5000); 
-                
+                paySuccessClose(params);
             } else if (params.get('flag') == "cancel") {
                 window.alert('会議室の予約を支払いに失敗しました、再予約してください。');
+            } else {
+                //     var time = new Date();
+                // var day = ("0" + time.getDate()).slice(-2);
+                // var month = ("0" + (time.getMonth() + 1)).slice(-2);
+                // var today = time.getFullYear() + "-" + (month) + "-" + (day);
+                // var hour = time.getHours();
+                // var minute = time.getMinutes();
+                // var nowTime = hour + ":" + minute;
+                // var nowTimeEnd = hour + ":" + (minute + 1);
+                // $('#meetingdate').val(today);
+                // $('#seltimestart').val(nowTime);
+                // $('#seltimeend').val(nowTimeEnd);
             }
 
         }
@@ -228,21 +227,21 @@
         function paySuccessClose(params) {
             // const params = (new URL(document.location)).searchParams;
             getValueFromHeader(params)
-            
+
         }
 
         function btnGetValueSendMes() {
             const name = $('input[name="name"]').val();
-                const meetingDate = $('input[name="meetingdate"]').val();
-                const meetingTimeStart = $('input[name="seltimestart"]').val();
-                const meetingTimeEnd = $('input[name="seltimeend"]').val();
-                const meetingRoomNum = $("#meetingroom option:selected").val();
+            const meetingDate = $('input[name="meetingdate"]').val();
+            const meetingTimeStart = $('input[name="seltimestart"]').val();
+            const meetingTimeEnd = $('input[name="seltimeend"]').val();
+            const meetingRoomNum = $("#meetingroom option:selected").val();
 
-                var notificationFlag = $("#notificationflag option:selected").val();
-                if (notificationFlag == "通知不要") {
-                    notificationFlag = "1";
-                }
-                const msg = name + "\n" + meetingDate + " " + meetingTimeStart + "\n" + meetingDate + " " + meetingTimeEnd +
+            var notificationFlag = $("#notificationflag option:selected").val();
+            if (notificationFlag == "通知不要") {
+                notificationFlag = "1";
+            }
+            const msg = name + "\n" + meetingDate + " " + meetingTimeStart + "\n" + meetingDate + " " + meetingTimeEnd +
                 "\n" + meetingRoomNum + "\n" + notificationFlag;
             sendText("会議室の予約：\n" + msg);
             return false;
@@ -262,12 +261,9 @@
             $('#seltimeend').val(meetingTimeEnd);
             $("#meetingroom").val(meetingRoomNum);
             $("#notificationflag").val(notificationFlag);
-            
-            setTimeout(function () {
-                var btnsend = document.getElementById('btn-sendMessage');
-                btnsend.click();
-            }, 3000);
-            
+
+            var btnsend = document.getElementById('btn-sendMessage');
+            btnsend.click();
 
         }
     </script>
