@@ -98,7 +98,7 @@
 
     </form>
     <div>
-        <button class="btn-sendMessage" id="btn-sendMessage" hidden="false" onclick="btnGetValueSendMes()"></button>
+        <button class="btn-sendMessage" id="btn-sendMessage" hidden="true" onclick="btnGetValueSendMes()"></button>
     </div>
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
@@ -107,22 +107,29 @@
     </script>
     <script charset="utf-8" src="https://static.line-scdn.net/liff/edge/2.1/sdk.js"></script>
     <script>
-        // window.onbeforeunload = function(e) {
-        //     return '';
-        // };
         $(document).ready(function () {
             coverDiv();
             const liffId = "1656977708-3LzXW8n5";
             initializeLiff(liffId);
-
+            
             setTimeout(function () {
                 hide();
                 judgewherefrom();
-            }, 5000);
+            }, 5000); 
         })
 
         function initializeLiff(liffId) {
-
+            var time = new Date();
+            var day = ("0" + time.getDate()).slice(-2);
+            var month = ("0" + (time.getMonth() + 1)).slice(-2);
+            var today = time.getFullYear() + "-" + (month) + "-" + (day);
+            var hour = time.getHours();
+            var minute = time.getMinutes();
+            var nowTime = hour + ":" + minute;
+            var nowTimeEnd = hour + ":" + (minute + 1);
+            $('#meetingdate').val(today);
+            $('#seltimestart').val(nowTime);
+            $('#seltimeend').val(nowTimeEnd);
             liff.init({
                 liffId: liffId
             }).then((data) => {
@@ -135,22 +142,13 @@
         function judgewherefrom() {
             // 判断是初次进入页面还是由line pay跳转回来的
             const params = (new URL(document.location)).searchParams;
-            //   if (params.get('flag') == "success") {
-                paySuccessClose(params);
-            //   } else if (params.get('flag') == "cancel") {
-               //    window.alert('会議室の予約を支払いに失敗しました、再予約してください。');
-           //    } else {
-                //     var time = new Date();
-                // var day = ("0" + time.getDate()).slice(-2);
-                // var month = ("0" + (time.getMonth() + 1)).slice(-2);
-                // var today = time.getFullYear() + "-" + (month) + "-" + (day);
-                // var hour = time.getHours();
-                // var minute = time.getMinutes();
-                // var nowTime = hour + ":" + minute;
-                // var nowTimeEnd = hour + ":" + (minute + 1);
-                // $('#meetingdate').val(today);
-                // $('#seltimestart').val(nowTime);
-                // $('#seltimeend').val(nowTimeEnd);
+            if (params.get('flag') == "success") {
+                setTimeout(function () {
+                    paySuccessClose(params);
+                }, 5000); 
+                
+            } else if (params.get('flag') == "cancel") {
+                window.alert('会議室の予約を支払いに失敗しました、再予約してください。');
             }
 
         }
@@ -227,21 +225,21 @@
         function paySuccessClose(params) {
             // const params = (new URL(document.location)).searchParams;
             getValueFromHeader(params)
-
+            
         }
 
         function btnGetValueSendMes() {
             const name = $('input[name="name"]').val();
-            const meetingDate = $('input[name="meetingdate"]').val();
-            const meetingTimeStart = $('input[name="seltimestart"]').val();
-            const meetingTimeEnd = $('input[name="seltimeend"]').val();
-            const meetingRoomNum = $("#meetingroom option:selected").val();
+                const meetingDate = $('input[name="meetingdate"]').val();
+                const meetingTimeStart = $('input[name="seltimestart"]').val();
+                const meetingTimeEnd = $('input[name="seltimeend"]').val();
+                const meetingRoomNum = $("#meetingroom option:selected").val();
 
-            var notificationFlag = $("#notificationflag option:selected").val();
-            if (notificationFlag == "通知不要") {
-                notificationFlag = "1";
-            }
-            const msg = name + "\n" + meetingDate + " " + meetingTimeStart + "\n" + meetingDate + " " + meetingTimeEnd +
+                var notificationFlag = $("#notificationflag option:selected").val();
+                if (notificationFlag == "通知不要") {
+                    notificationFlag = "1";
+                }
+                const msg = name + "\n" + meetingDate + " " + meetingTimeStart + "\n" + meetingDate + " " + meetingTimeEnd +
                 "\n" + meetingRoomNum + "\n" + notificationFlag;
             sendText("会議室の予約：\n" + msg);
             return false;
@@ -261,9 +259,12 @@
             $('#seltimeend').val(meetingTimeEnd);
             $("#meetingroom").val(meetingRoomNum);
             $("#notificationflag").val(notificationFlag);
-
-            var btnsend = document.getElementById('btn-sendMessage');
-            btnsend.click();
+            
+            setTimeout(function () {
+                var btnsend = document.getElementById('btn-sendMessage');
+                btnsend.click();
+            }, 3000);
+            
 
         }
     </script>
