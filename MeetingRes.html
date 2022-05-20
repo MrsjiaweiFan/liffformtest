@@ -249,15 +249,22 @@
                 })
                 .then(async () => {
                     if (liff.isLoggedIn()) {
-                        console.log(liff.getProfile());
-                        window.alert(liff.getProfile().userId);
+                        liff
+                            .getProfile()
+                            .then((profile) => {
+                            const name = profile.displayName;
+                            window.alert("name"+name);
+                           })
+                            .catch((err) => {
+                                window.alert("error"+ err);
+                            });
                     } else {
                         liff.login();
                     }
                 })
                 .catch((err) => {
                     console.log(err);
-                })
+                });
             return false;
         }
         // 支付成功后在原页面赋值
