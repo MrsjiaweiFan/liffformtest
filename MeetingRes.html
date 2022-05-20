@@ -97,6 +97,9 @@
         </div>
 
     </form>
+    <div>
+        <button class="btn-sendMessage" id="btn-sendMessage" onclick="btnGetValueSendMes()"></button>
+    </div>
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" crossorigin="anonymous"></script>
@@ -106,12 +109,13 @@
     <script>
         $(document).ready(function () {
             coverDiv();
-            setTimeout(function () {
-                hide();
-            }, 3000);
             const liffId = "1656977708-3LzXW8n5";
             initializeLiff(liffId);
-            judgewherefrom();
+            
+            setTimeout(function () {
+                hide();
+                judgewherefrom();
+            }, 5000); 
         })
 
         function initializeLiff(liffId) {
@@ -130,7 +134,7 @@
                 liffId: liffId
             }).then((data) => {
                 initializeApp();
-
+                alert(liffinit成功);
             }).catch((err) => {
                 console.log('LIFF Initialization failed ', err);
             });
@@ -219,19 +223,25 @@
         function paySuccessClose(params) {
             // const params = (new URL(document.location)).searchParams;
             getValueFromHeader(params)
-            const name = params.get('name');
-            const meetingDate = params.get('meetingDate');
-            const meetingTimeStart = params.get('meetingTimeStart');
-            const meetingTimeEnd = params.get('meetingTimeEnd');
-            const meetingRoomNum = params.get('meetingRoomNum');
-            const notificationFlag = params.get('notificationFlag');
-            const msg = name + "\n" + meetingDate + " " + meetingTimeStart + "\n" + meetingDate + " " + meetingTimeEnd +
-                "\n" + meetingRoomNum + "\n" + notificationFlag;
-            sendText("会議室の予約：\n" + msg);
-
-            return false;
+            
         }
 
+        function btnGetValueSendMes() {
+            const name = $('input[name="name"]').val();
+                const meetingDate = $('input[name="meetingdate"]').val();
+                const meetingTimeStart = $('input[name="seltimestart"]').val();
+                const meetingTimeEnd = $('input[name="seltimeend"]').val();
+                const meetingRoomNum = $("#meetingroom option:selected").val();
+
+                var notificationFlag = $("#notificationflag option:selected").val();
+                if (notificationFlag == "通知不要") {
+                    notificationFlag = "1";
+                }
+                const msg = name + "\n" + meetingDate + " " + meetingTimeStart + "\n" + meetingDate + " " + meetingTimeEnd +
+                "\n" + meetingRoomNum + "\n" + notificationFlag;
+            sendText("会議室の予約：\n" + msg);
+            return false;
+        }
         // 支付成功后在原页面赋值
         function getValueFromHeader(params) {
             const name = params.get('name');
@@ -247,6 +257,9 @@
             $('#seltimeend').val(meetingTimeEnd);
             $("#meetingroom").val(meetingRoomNum);
             $("#notificationflag").val(notificationFlag);
+
+            var btnsend = document.getElementById('btn-sendMessage');
+            btnsend.click();
 
         }
     </script>
