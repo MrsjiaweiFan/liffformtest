@@ -52,10 +52,10 @@
             <p class="mt-5">ミーティングルーム番号</p>
             <div class="meetingroomcontainer">
                 <select id="meetingroom">
-                    <option value="001">第１会議室</option>
-                    <option value="002">第２会議室</option>
-                    <option value="003">第３会議室</option>
-                    <option value="004">第４会議室</option>
+                    <option value="1">第１会議室</option>
+                    <option value="2">第２会議室</option>
+                    <option value="3">第３会議室</option>
+                    <option value="4">第４会議室</option>
                 </select>
                 <span class="left"></span>
                 <span class="right"></span>
@@ -95,6 +95,7 @@
             <span class="point"></span>
             <span class="point"></span>
         </div>
+
     </form>
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
@@ -104,8 +105,13 @@
     <script charset="utf-8" src="https://static.line-scdn.net/liff/edge/2.1/sdk.js"></script>
     <script>
         $(document).ready(function () {
+            coverDiv();
+            setTimeout(function () {
+                hide();
+            }, 3000);
             const liffId = "1656977708-3LzXW8n5";
             initializeLiff(liffId);
+            judgewherefrom();
         })
 
         function initializeLiff(liffId) {
@@ -124,12 +130,28 @@
                 liffId: liffId
             }).then((data) => {
                 initializeApp();
+
             }).catch((err) => {
                 console.log('LIFF Initialization failed ', err);
             });
         }
 
+        function judgewherefrom() {
+            // 判断是初次进入页面还是由line pay跳转回来的
+            const params = (new URL(document.location)).searchParams;
+            if (params.get('flag') == "success") {
+                paySuccessClose(params);
+            } else if (params.get('flag') == "cancel") {
+                window.alert('会議室の予約を支払いに失敗しました、再予約してください。');
+            }
+
+        }
+
         function sendText(text) {
+            coverDiv();
+            setTimeout(function () {
+                hide();
+            }, 3000);
             liff.sendMessages([{
                 'type': 'text',
                 'text': text
@@ -141,14 +163,6 @@
         }
 
         $(function () {
-
-            // 判断是初次进入页面还是由line pay跳转回来的
-            const params = (new URL(document.location)).searchParams;
-            if (params.get('flag') == "success") {
-                paySuccessClose(params);
-            } else if (params.get('flag') == "cancel") {
-                window.alert('会議室の予約を支払いに失敗しました、再予約してください。');
-            }
             $('form').submit(function () {
                 coverDiv();
                 window.event.returnValue = false;
@@ -204,17 +218,36 @@
         // 支付成功后，直接sendmessage
         function paySuccessClose(params) {
             // const params = (new URL(document.location)).searchParams;
+            getValueFromHeader(params)
             const name = params.get('name');
             const meetingDate = params.get('meetingDate');
             const meetingTimeStart = params.get('meetingTimeStart');
             const meetingTimeEnd = params.get('meetingTimeEnd');
             const meetingRoomNum = params.get('meetingRoomNum');
             const notificationFlag = params.get('notificationFlag');
-            const msg =
-                `${name}\n${meetingdate+" "+meetingtimestart}\n${meetingdate+" "+meetingtimeend}\n${meetingroomnum}\n${notificationFlag}`;
+            const msg = name + "\n" + meetingDate + " " + meetingTimeStart + "\n" + meetingDate + " " + meetingTimeEnd +
+                "\n" + meetingRoomNum + "\n" + notificationFlag;
             sendText("会議室の予約：\n" + msg);
 
             return false;
+        }
+
+        // 支付成功后在原页面赋值
+        function getValueFromHeader(params) {
+            const name = params.get('name');
+            const meetingDate = params.get('meetingDate');
+            const meetingTimeStart = params.get('meetingTimeStart');
+            const meetingTimeEnd = params.get('meetingTimeEnd');
+            const meetingRoomNum = params.get('meetingRoomNum');
+            const notificationFlag = params.get('notificationFlag');
+
+            $('input[name="name"]').attr("value", name);
+            $('#meetingdate').val(meetingDate);
+            $('#seltimestart').val(meetingTimeStart);
+            $('#seltimeend').val(meetingTimeEnd);
+            $("#meetingroom").val(meetingRoomNum);
+            $("#notificationflag").val(notificationFlag);
+
         }
     </script>
 
