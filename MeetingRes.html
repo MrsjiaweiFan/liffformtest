@@ -135,11 +135,11 @@
         function judgewherefrom() {
             // 判断是初次进入页面还是由line pay跳转回来的
             const params = (new URL(document.location)).searchParams;
-            if (params.get('flag') == "success") {
+            //   if (params.get('flag') == "success") {
                 paySuccessClose(params);
-            } else if (params.get('flag') == "cancel") {
-                window.alert('会議室の予約を支払いに失敗しました、再予約してください。');
-            } else {
+            //   } else if (params.get('flag') == "cancel") {
+               //    window.alert('会議室の予約を支払いに失敗しました、再予約してください。');
+           //    } else {
                 //     var time = new Date();
                 // var day = ("0" + time.getDate()).slice(-2);
                 // var month = ("0" + (time.getMonth() + 1)).slice(-2);
