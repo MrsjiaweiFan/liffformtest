@@ -242,7 +242,22 @@
                 const msg = name + "\n" + meetingDate + " " + meetingTimeStart + "\n" + meetingDate + " " + meetingTimeEnd +
                 "\n" + meetingRoomNum + "\n" + notificationFlag;
            // sendText("会議室の予約：\n" + msg);
-            window.alert(liff.getProfile().userId);
+            window.alert("要开始获取了。。。");
+
+            liff.init({
+                    liffId: '1656977708-3LzXW8n5'
+                })
+                .then(async () => {
+                    if (liff.isLoggedIn()) {
+                        console.log(liff.getProfile());
+                        window.alert(liff.getProfile().userId);
+                    } else {
+                        liff.login();
+                    }
+                })
+                .catch((err) => {
+                    console.log(err);
+                })
             return false;
         }
         // 支付成功后在原页面赋值
