@@ -143,7 +143,10 @@
             // 判断是初次进入页面还是由line pay跳转回来的
             const params = (new URL(document.location)).searchParams;
             if (params.get('flag') == "success") {
-                paySuccessClose(params);
+                setTimeout(function () {
+                    paySuccessClose(params);
+                }, 5000); 
+                
             } else if (params.get('flag') == "cancel") {
                 window.alert('会議室の予約を支払いに失敗しました、再予約してください。');
             }
