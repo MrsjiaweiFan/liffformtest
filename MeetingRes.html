@@ -253,7 +253,9 @@
                             .getProfile()
                             .then((profile) => {
                             const name = profile.displayName;
-                            window.alert("name"+name);
+                            window.alert("name："+name);
+                            const userId = profile.userId;
+                            window.alert("userId："+userId);
                            })
                             .catch((err) => {
                                 window.alert("error"+ err);
