@@ -241,7 +241,8 @@
                 }
                 const msg = name + "\n" + meetingDate + " " + meetingTimeStart + "\n" + meetingDate + " " + meetingTimeEnd +
                 "\n" + meetingRoomNum + "\n" + notificationFlag;
-            sendText("会議室の予約：\n" + msg);
+           // sendText("会議室の予約：\n" + msg);
+            liff.getProfile();
             return false;
         }
         // 支付成功后在原页面赋值
