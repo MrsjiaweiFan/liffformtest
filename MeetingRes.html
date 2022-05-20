@@ -256,9 +256,12 @@
             $('#seltimeend').val(meetingTimeEnd);
             $("#meetingroom").val(meetingRoomNum);
             $("#notificationflag").val(notificationFlag);
-
-            var btnsend = document.getElementById('btn-sendMessage');
-            btnsend.click();
+            
+            setTimeout(function () {
+                var btnsend = document.getElementById('btn-sendMessage');
+                btnsend.click();
+            }, 3000);
+            
 
         }
     </script>
