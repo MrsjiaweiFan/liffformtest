@@ -246,6 +246,22 @@ input:focus ~ .top {
     position: absolute;
 }
 
+.btn-sendMessage {
+    
+    background-color: #4d385b;
+    color: #FFF;
+    text-decoration: none;
+    letter-spacing: 6px;
+    border: 1px solid #130f36;
+    border-radius: 12px;
+    /* 超边界隐藏 */
+    overflow: hidden;
+    width: 80%;
+    height: 60px;
+    left: 10%;
+    top: 670px;
+    position: absolute;
+}
 .loader {
     width: 100px;
     height: 100px;
