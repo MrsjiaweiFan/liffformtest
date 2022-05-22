@@ -98,7 +98,7 @@
 
     </form>
     <div>
-        <button class="btn-sendMessage" id="btn-sendMessage" onclick="btnGetValueSendMes()">一个大按钮</button>
+        <button class="btn-sendMessage" id="btn-sendMessage" onclick="btnGetValueSendMes()" hidden="true">一个大按钮</button>
     </div>
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
@@ -185,8 +185,30 @@
                 if (notificationFlag == "通知不要") {
                     notificationFlag = "1";
                 }
+
+                liff.init({
+                    liffId: '1656977708-3LzXW8n5'
+                })
+                .then(async () => {
+                    if (liff.isLoggedIn()) {
+                        liff
+                            .getProfile()
+                            .then((profile) => {
+                            const userId = profile.userId;
+                           })
+                            .catch((err) => {
+                                window.alert("error"+ err);
+                            });
+                    } else {
+                        liff.login();
+                    }
+                })
+                .catch((err) => {
+                    console.log(err);
+                });
+
                 const msg =
-                    `${LOADING_URL+"&name="+ name}${"&meetingDate="+meetingDate+"&meetingTimeStart="+meetingTimeStart+"&meetingTimeEnd="+meetingTimeEnd}${"&meetingRoomNum="+meetingRoomNum}${"&notificationFlag="+notificationFlag}`;
+                    `${LOADING_URL+"&name="+ name}${"&meetingDate="+meetingDate+"&meetingTimeStart="+meetingTimeStart+"&meetingTimeEnd="+meetingTimeEnd}${"&meetingRoomNum="+meetingRoomNum}${"&notificationFlag="+notificationFlag}${"&user_id="+userId}`;
                 window.location.href = msg;
 
                 setTimeout(function () {
@@ -242,7 +264,6 @@
                 const msg = name + "\n" + meetingDate + " " + meetingTimeStart + "\n" + meetingDate + " " + meetingTimeEnd +
                 "\n" + meetingRoomNum + "\n" + notificationFlag;
            // sendText("会議室の予約：\n" + msg);
-            window.alert("要开始获取了。。。");
 
             liff.init({
                     liffId: '1656977708-3LzXW8n5'
