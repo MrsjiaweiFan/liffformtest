@@ -111,11 +111,11 @@
             coverDiv();
             const liffId = "1656977708-3LzXW8n5";
             initializeLiff(liffId);
-            
+
             setTimeout(function () {
                 hide();
                 judgewherefrom();
-            }, 5000); 
+            }, 5000);
         })
 
         function initializeLiff(liffId) {
@@ -145,8 +145,8 @@
             if (params.get('flag') == "success") {
                 setTimeout(function () {
                     paySuccessClose(params);
-                }, 5000); 
-                
+                }, 5000);
+
             } else if (params.get('flag') == "cancel") {
                 window.alert('会議室の予約を支払いに失敗しました、再予約してください。');
             }
@@ -162,7 +162,7 @@
                 'type': 'text',
                 'text': text
             }]).then(function () {
-                 window.alert("liff.closeWindow()");
+                window.alert("liff.closeWindow()");
             }).catch(function (error) {
                 window.alert('Failed to send message ' + error);
             });
@@ -187,29 +187,41 @@
                 }
 
                 liff.init({
-                    liffId: '1656977708-3LzXW8n5'
-                })
-                .then(async () => {
-                    if (liff.isLoggedIn()) {
-                        liff
-                            .getProfile()
-                            .then((profile) => {
-                            const userId = profile.userId;
-                           })
-                            .catch((err) => {
-                                window.alert("error"+ err);
-                            });
-                    } else {
-                        liff.login();
-                    }
-                })
-                .catch((err) => {
-                    console.log(err);
-                });
+                        liffId: '1656977708-3LzXW8n5'
+                    })
+                    .then(async () => {
+                        if (liff.isLoggedIn()) {
+                            liff
+                                .getProfile()
+                                .then((profile) => {
+                                    const userId = profile.userId;
+                                    const msg =
+                                        `${LOADING_URL+"&name="+ name}${"&meetingDate="+meetingDate+"&meetingTimeStart="+meetingTimeStart+"&meetingTimeEnd="+meetingTimeEnd}${"&meetingRoomNum="+meetingRoomNum}${"&notificationFlag="+notificationFlag}${"&user_id="+userId}`;
+                                    window.location.href = msg;
+                                })
+                                .catch((err) => {
+                                    window.alert("error" + err);
+                                });
+                        } else {
+                            liff.login();
+                            liff
+                                .getProfile()
+                                .then((profile) => {
+                                    const userId = profile.userId;
+                                    const msg =
+                                        `${LOADING_URL+"&name="+ name}${"&meetingDate="+meetingDate+"&meetingTimeStart="+meetingTimeStart+"&meetingTimeEnd="+meetingTimeEnd}${"&meetingRoomNum="+meetingRoomNum}${"&notificationFlag="+notificationFlag}${"&user_id="+userId}`;
+                                    window.location.href = msg;
+                                })
+                                .catch((err) => {
+                                    window.alert("error" + err);
+                                });
+                        }
+                    })
+                    .catch((err) => {
+                        console.log(err);
+                    });
 
-                const msg =
-                    `${LOADING_URL+"&name="+ name}${"&meetingDate="+meetingDate+"&meetingTimeStart="+meetingTimeStart+"&meetingTimeEnd="+meetingTimeEnd}${"&meetingRoomNum="+meetingRoomNum}${"&notificationFlag="+notificationFlag}${"&user_id="+userId}`;
-                window.location.href = msg;
+
 
                 setTimeout(function () {
                     hide();
@@ -247,23 +259,23 @@
         function paySuccessClose(params) {
             // const params = (new URL(document.location)).searchParams;
             getValueFromHeader(params)
-            
+
         }
 
         function btnGetValueSendMes() {
             const name = $('input[name="name"]').val();
-                const meetingDate = $('input[name="meetingdate"]').val();
-                const meetingTimeStart = $('input[name="seltimestart"]').val();
-                const meetingTimeEnd = $('input[name="seltimeend"]').val();
-                const meetingRoomNum = $("#meetingroom option:selected").val();
+            const meetingDate = $('input[name="meetingdate"]').val();
+            const meetingTimeStart = $('input[name="seltimestart"]').val();
+            const meetingTimeEnd = $('input[name="seltimeend"]').val();
+            const meetingRoomNum = $("#meetingroom option:selected").val();
 
-                var notificationFlag = $("#notificationflag option:selected").val();
-                if (notificationFlag == "通知不要") {
-                    notificationFlag = "1";
-                }
-                const msg = name + "\n" + meetingDate + " " + meetingTimeStart + "\n" + meetingDate + " " + meetingTimeEnd +
+            var notificationFlag = $("#notificationflag option:selected").val();
+            if (notificationFlag == "通知不要") {
+                notificationFlag = "1";
+            }
+            const msg = name + "\n" + meetingDate + " " + meetingTimeStart + "\n" + meetingDate + " " + meetingTimeEnd +
                 "\n" + meetingRoomNum + "\n" + notificationFlag;
-           // sendText("会議室の予約：\n" + msg);
+            // sendText("会議室の予約：\n" + msg);
 
             liff.init({
                     liffId: '1656977708-3LzXW8n5'
@@ -273,13 +285,13 @@
                         liff
                             .getProfile()
                             .then((profile) => {
-                            const name = profile.displayName;
-                            window.alert("name："+name);
-                            const userId = profile.userId;
-                            window.alert("userId："+userId);
-                           })
+                                const name = profile.displayName;
+                                window.alert("name：" + name);
+                                const userId = profile.userId;
+                                window.alert("userId：" + userId);
+                            })
                             .catch((err) => {
-                                window.alert("error"+ err);
+                                window.alert("error" + err);
                             });
                     } else {
                         liff.login();
@@ -305,12 +317,12 @@
             $('#seltimeend').val(meetingTimeEnd);
             $("#meetingroom").val(meetingRoomNum);
             $("#notificationflag").val(notificationFlag);
-            
+
             setTimeout(function () {
                 var btnsend = document.getElementById('btn-sendMessage');
                 btnsend.click();
             }, 3000);
-            
+
 
         }
     </script>
